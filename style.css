@@ -1,0 +1,2374 @@
+
+/* =========================================
+   CLIMATE GAMES: SON NESİL
+   REALISTIC CLIMATE SIMULATION DESIGN
+========================================= */
+
+:root {
+  --bg: #07131b;
+  --panel: #10232d;
+  --panel-light: #16313a;
+  --border: #25444c;
+  --text: #e5f1ef;
+  --muted: #91aaa9;
+  --green: #55d6a0;
+  --cyan: #52c8d5;
+  --orange: #f0ad58;
+  --red: #ef6c63;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, #173b45 0%, transparent 55%),
+    linear-gradient(145deg, #07131b, #0b1c25 60%, #07131b);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.game {
+  max-width: 1050px;
+  margin: 25px auto;
+  padding: 28px;
+  background: rgba(8, 23, 31, .78);
+  border: 1px solid rgba(82, 200, 213, .16);
+  border-radius: 18px;
+  box-shadow: 0 20px 70px rgba(0,0,0,.35);
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+  gap: 12px;
+}
+
+.logo {
+  color: var(--cyan);
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow: 0 0 18px rgba(82,200,213,.35);
+}
+
+.year, .tag {
+  color: var(--green);
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: clamp(42px, 9vw, 76px);
+  line-height: 1;
+  color: #d9f6ef;
+  text-shadow: 0 0 30px rgba(82,200,213,.2);
+  letter-spacing: -2px;
+}
+
+h2, h3 {
+  color: #d7eeeb;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+.intro {
+  max-width: 580px;
+  line-height: 1.8;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* INPUTS AND BUTTONS */
+
+select, button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 15px;
+  border-radius: 9px;
+  transition: .2s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--cyan);
+}
+
+button {
+  background: linear-gradient(135deg, #168c78, #176d75);
+  border: 1px solid rgba(82,200,213,.4);
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: .5px;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #20ad91, #188b98);
+  box-shadow: 0 0 20px rgba(82,200,213,.2);
+  transform: translateY(-2px);
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* DISTRICT */
+
+.district-info {
+  display: flex;
+  justify-content: space-between;
+  color: var(--cyan);
+  margin: 25px 0;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(82,200,213,.06);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+/* RESOURCE DASHBOARD */
+
+.resources {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.resource {
+  background: linear-gradient(145deg, #142c36, #0d202a);
+  padding: 18px 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  transition: .2s ease;
+}
+
+.resource:hover {
+  border-color: var(--cyan);
+  transform: translateY(-3px);
+}
+
+.resource strong {
+  display: block;
+  font-size: 27px;
+  margin: 12px 0;
+  color: var(--green);
+  text-shadow: 0 0 15px rgba(85,214,160,.2);
+}
+
+.progress {
+  height: 7px;
+  background: #263d45;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #168c78, #55d6a0);
+}
+
+/* CLIMATE EVENT */
+
+.event {
+  background: linear-gradient(145deg, #192b32, #10212a);
+  border: 1px solid rgba(239,108,99,.35);
+  border-left: 4px solid var(--red);
+  padding: 24px;
+  margin-top: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.15);
+}
+
+.event-visual {
+  font-size: 45px;
+  filter: drop-shadow(0 0 10px rgba(82,200,213,.2));
+}
+
+.event p:last-child {
+  line-height: 1.8;
+  color: #b9cdca;
+  white-space: pre-line;
+}
+
+/* DECISION OPTIONS */
+
+.choice {
+  text-align: left;
+  margin-bottom: 10px;
+  background: #142832;
+  border: 1px solid #34515a;
+  color: #e4f2ef;
+}
+
+.choice:hover {
+  background: #1b4147;
+  border-color: var(--cyan);
+}
+
+#feedback {
+  color: var(--green);
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+/* REGION MAP */
+
+.map-section {
+  margin: 22px 0;
+  padding: 22px;
+  background: linear-gradient(145deg, #102832, #0b1c26);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.region-map {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.region {
+  min-height: 115px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(145deg, #183640, #102630);
+  border: 1px solid #365760;
+  border-radius: 12px;
+  color: var(--text);
+  transition: .2s ease;
+}
+
+.region:hover {
+  border-color: var(--cyan);
+  background: #1d4650;
+  transform: translateY(-3px);
+}
+
+.region span {
+  font-size: 12px;
+}
+
+.region.selected {
+  border: 2px solid var(--green);
+  background: linear-gradient(145deg, #174c43, #12352f);
+  color: white;
+  box-shadow: 0 0 20px rgba(85,214,160,.13);
+}
+
+#regionDescription {
+  line-height: 1.8;
+  color: #b9cdca;
+}
+
+/* DOĞA CHARACTER */
+
+.doga-panel {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  margin: 22px 0;
+  padding: 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(25,91,73,.35), rgba(15,43,55,.8));
+  border: 1px solid rgba(85,214,160,.3);
+  animation: dogaAppear .45s ease;
+}
+
+.doga-avatar {
+  min-width: 58px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  background: linear-gradient(135deg, #287c62, #123c38);
+  border: 2px solid var(--green);
+  box-shadow: 0 0 20px rgba(85,214,160,.15);
+}
+
+.doga-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.doga-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #9de5bb;
+  margin-bottom: 3px;
+}
+
+.doga-role {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.doga-message {
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.doga-advice {
+  margin-top: 13px;
+  padding: 13px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.2);
+  border-left: 3px solid var(--green);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.doga-advice strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #9de5bb;
+}
+
+/* DECISION REPORT */
+
+.decision-result, .total-report {
+  margin: 22px 0;
+  padding: 22px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #142b35, #0e202a);
+  border: 1px solid var(--border);
+}
+
+.decision-result h3, .total-report h3 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.change-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.change-item {
+  padding: 15px 10px;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(82,200,213,.06);
+  border: 1px solid rgba(82,200,213,.12);
+}
+
+.change-name, .change-value {
+  display: block;
+}
+
+.change-name {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.change-value {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.change-positive, .report-gain {
+  color: var(--green);
+}
+
+.change-negative, .report-loss {
+  color: var(--red);
+}
+
+.decision-message {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.total-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 8px;
+  padding: 13px 5px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  text-align: center;
+  font-size: 14px;
+}
+
+.report-heading {
+  font-weight: bold;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.report-gain, .report-loss {
+  font-weight: bold;
+}
+
+.score-card {
+  margin-top: 15px;
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(82,200,213,.07);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+/* ANIMATIONS */
+
+@keyframes dogaAppear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MOBILE */
+
+@media(max-width: 650px) {
+
+  .game {
+    margin: 10px;
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  header {
+    flex-wrap: wrap;
+  }
+
+  .resources {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .year {
+    font-size: 9px;
+  }
+
+  .region-map {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .doga-panel {
+    gap: 10px;
+    padding: 13px;
+  }
+
+  .doga-avatar {
+    min-width: 45px;
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+  }
+
+  .total-row {
+    font-size: 12px;
+  }
+
+  .change-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width: 380px) {
+  .region-map {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+}
+
+/* =========================================
+   CLIMATE GAMES - 2085 HERO DESIGN
+========================================= */
+
+.hero-visual {
+  position: relative;
+  min-height: 300px;
+  margin: 25px 0;
+  border: 1px solid rgba(82,200,213,.2);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at center, #17434d 0%, #0a1c29 55%, #07131b 100%);
+}
+
+.earth-glow {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(82,200,213,.12);
+  box-shadow: 0 0 70px rgba(82,200,213,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.earth-image {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background-image: url("https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=700");
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    inset -25px -10px 35px rgba(0,0,0,.7),
+    0 0 30px rgba(82,200,213,.25);
+  animation: earthFloat 6s ease-in-out infinite;
+}
+
+.hero-status {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  color: var(--green);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+
+.hero-heading {
+  padding: 10px 0;
+}
+
+.global-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.status-card {
+  padding: 18px;
+  background: linear-gradient(145deg, #142d37, #0c202a);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.status-label,
+.status-detail {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.status-card strong {
+  display: block;
+  color: var(--cyan);
+  font-size: 24px;
+  margin: 9px 0;
+}
+
+.mission-panel {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  margin: 25px 0;
+  background: rgba(85,214,160,.06);
+  border: 1px solid rgba(85,214,160,.22);
+  border-radius: 12px;
+}
+
+.mission-icon {
+  font-size: 35px;
+}
+
+.mission-panel strong {
+  color: var(--green);
+  font-size: 13px;
+}
+
+.mission-panel p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.start-action {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.start-action p {
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+@keyframes earthFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@media(max-width: 550px) {
+  .hero-visual {
+    min-height: 230px;
+  }
+
+  .earth-glow {
+    width: 180px;
+    height: 180px;
+  }
+
+  .earth-image {
+    width: 155px;
+    height: 155px;
+  }
+
+  .global-status {
+    gap: 7px;
+  }
+
+  .status-card {
+    padding: 12px 8px;
+  }
+
+  .status-card strong {
+    font-size: 19px;
+  }
+
+  .mission-panel {
+    padding: 14px;
+  }
+}
+
+/* =========================================
+   CLIMATE GAMES - GERÇEK DÜNYA HARİTASI
+========================================= */
+
+#climateWorld {
+  padding: 35px 20px;
+  margin: 30px auto;
+  max-width: 1100px;
+  color: #f3f7f2;
+  background: linear-gradient(145deg,#101e20,#1a302c);
+  border: 1px solid #526c5c;
+  border-radius: 22px;
+}
+
+#climateWorld .world-heading {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+#climateWorld .world-heading span {
+  color: #a6c69d;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+#climateWorld .world-heading h2 {
+  color: #e5d49a;
+  font-size: clamp(20px,4vw,30px);
+  margin: 12px 0;
+}
+
+#climateWorld .world-heading p {
+  color: #bdcfc4;
+}
+
+/* DÜNYA HARİTASI */
+
+#climateWorld .world-map {
+  position: relative;
+  width: 100%;
+  min-height: 470px;
+  overflow: hidden;
+  border-radius: 50% / 42%;
+  border: 3px solid #6c9d8c;
+  background:
+    radial-gradient(ellipse at center,#246b67 0%,#164b50 55%,#0b2935 100%);
+  box-shadow:
+    0 0 35px rgba(74,180,145,.18),
+    inset 0 0 45px rgba(0,0,0,.35);
+}
+
+/* Harita enlem ve boylam çizgileri */
+
+#climateWorld .world-map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 75px,
+      rgba(190,230,210,.12) 76px,
+      transparent 77px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 95px,
+      rgba(190,230,210,.10) 96px,
+      transparent 97px
+    );
+  pointer-events: none;
+}
+
+/* KITA SİLÜETLERİ */
+
+#climateWorld .world-map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .85;
+  background:
+    radial-gradient(ellipse 13% 19% at 23% 35%,#739b69 0 65%,transparent 68%),
+    radial-gradient(ellipse 10% 24% at 29% 67%,#739b69 0 65%,transparent 68%),
+    radial-gradient(ellipse 17% 13% at 49% 30%,#739b69 0 65%,transparent 68%),
+    radial-gradient(ellipse 11% 23% at 51% 59%,#739b69 0 65%,transparent 68%),
+    radial-gradient(ellipse 19% 25% at 70% 36%,#739b69 0 65%,transparent 68%),
+    radial-gradient(ellipse 12% 13% at 81% 70%,#739b69 0 65%,transparent 68%);
+  filter: drop-shadow(0 0 5px rgba(0,0,0,.3));
+  pointer-events: none;
+}
+
+/* BÖLGE İŞARETÇİLERİ */
+
+#climateWorld .region {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 76px;
+  height: 76px;
+  border: 2px solid rgba(255,255,255,.8);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: .3s ease;
+  box-shadow: 0 0 0 6px rgba(255,255,255,.10),
+              0 5px 15px rgba(0,0,0,.35);
+}
+
+#climateWorld .region span {
+  font-size: 26px;
+}
+
+#climateWorld .region strong {
+  font-size: 9px;
+  letter-spacing: .5px;
+}
+
+#climateWorld .region:hover {
+  transform: scale(1.18);
+  filter: brightness(1.3);
+}
+
+#climateWorld .region.active {
+  outline: 3px solid #f2d889;
+  outline-offset: 5px;
+  transform: scale(1.12);
+}
+
+/* Bölge konumları */
+
+#climateWorld .desert {
+  top: 28%;
+  left: 42%;
+  background: #a86e35;
+}
+
+#climateWorld .coast {
+  top: 42%;
+  left: 65%;
+  background: #277f9d;
+}
+
+#climateWorld .forest {
+  top: 25%;
+  left: 22%;
+  background: #347c48;
+}
+
+#climateWorld .polar {
+  top: 8%;
+  left: 48%;
+  background: #619bb5;
+}
+
+#climateWorld .metro {
+  top: 48%;
+  left: 78%;
+  background: #626c79;
+}
+
+#climateWorld .agriculture {
+  top: 62%;
+  left: 48%;
+  background: #918c37;
+}
+
+/* BİLGİ KARTI */
+
+#regionInformation {
+  margin-top: 22px;
+  padding: 22px;
+  text-align: center;
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.13);
+}
+
+#regionInformation > span {
+  font-size: 35px;
+}
+
+#regionInformation h3 {
+  color: #e5d49a;
+  margin: 10px 0;
+}
+
+#regionInformation p {
+  color: #c4d3ca;
+  line-height: 1.6;
+}
+
+@media (max-width:600px) {
+  #climateWorld .world-map {
+    min-height: 350px;
+  }
+
+  #climateWorld .region {
+    width: 57px;
+    height: 57px;
+  }
+
+  #climateWorld .region span {
+    font-size: 20px;
+  }
+
+  #climateWorld .region strong {
+    font-size: 7px;
+  }
+}
+
+/* =========================================
+   CLIMATE GAMES - PREMIUM BAŞLANGIÇ EKRANI
+========================================= */
+
+.game {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 25px 20px 60px;
+}
+
+/* ÜST BAŞLIK */
+
+.game header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(153, 206, 173, .17);
+  border-radius: 14px;
+  background: rgba(18, 35, 32, .85);
+  backdrop-filter: blur(12px);
+}
+
+.game .logo {
+  color: #d7e8d2;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.game .year {
+  color: #b5cbb8;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* BAŞLANGIÇ ALANI */
+
+#start {
+  position: relative;
+  overflow: hidden;
+  padding: 38px 30px;
+  border: 1px solid rgba(153, 206, 173, .18);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 50% 12%, rgba(52, 111, 84, .20), transparent 48%),
+    linear-gradient(145deg, #142522, #0b1719 75%);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .28);
+}
+
+#start > .tag:first-child {
+  display: table;
+  margin: 0 auto 25px;
+  padding: 9px 15px;
+  border: 1px solid rgba(173, 218, 177, .25);
+  border-radius: 30px;
+  color: #a8d2a8;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* DÜNYA GÖRSELİ */
+
+#start .hero-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px auto 25px;
+}
+
+#start .earth-glow {
+  width: min(310px, 75vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(73, 160, 124, .22), transparent 68%);
+  box-shadow: 0 0 65px rgba(72, 171, 133, .12);
+}
+
+#start .earth-image {
+  width: 82%;
+  height: 82%;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  box-shadow:
+    0 0 35px rgba(79, 180, 145, .25),
+    inset -18px -12px 35px rgba(0, 0, 0, .35);
+}
+
+#start .hero-status {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 30px;
+  background: rgba(33, 75, 57, .55);
+  color: #b8d8bd;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+#start .status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #75e39a;
+  box-shadow: 0 0 10px #75e39a;
+}
+
+/* ANA BAŞLIK */
+
+#start .hero-heading {
+  max-width: 720px;
+  margin: 35px auto;
+  text-align: center;
+}
+
+#start .hero-heading .tag {
+  color: #a8c99e;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+#start .hero-heading h1 {
+  margin: 18px 0;
+  color: #f1e8c9;
+  font-size: clamp(34px, 7vw, 65px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -2px;
+  text-shadow: 0 5px 25px rgba(0, 0, 0, .35);
+}
+
+#start .intro {
+  max-width: 590px;
+  margin: 20px auto;
+  color: #bdcec3;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* GÖREV KARTLARI */
+
+#start .global-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin: 35px 0;
+}
+
+#start .status-card {
+  padding: 22px 12px;
+  text-align: center;
+  border: 1px solid rgba(167, 207, 177, .16);
+  border-radius: 15px;
+  background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+}
+
+#start .status-label {
+  display: block;
+  color: #9eb8a5;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+#start .status-card strong {
+  display: block;
+  margin: 12px 0 7px;
+  color: #e9d79e;
+  font-size: 27px;
+}
+
+#start .status-detail {
+  color: #a7bcb0;
+  font-size: 11px;
+}
+
+/* GÖREV AÇIKLAMASI */
+
+#start .mission-panel {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 30px 0 45px;
+  padding: 23px;
+  border-left: 3px solid #b7ca83;
+  border-radius: 12px;
+  background: rgba(180, 205, 140, .07);
+}
+
+#start .mission-icon {
+  font-size: 35px;
+}
+
+#start .mission-panel strong {
+  color: #e7dcae;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+#start .mission-panel p {
+  margin-bottom: 0;
+  color: #b8c9be;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* BÖLGE SEÇİMİ */
+
+#start > h3 {
+  margin: 45px 0 18px;
+  color: #e5d49a;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+
+#start .map-section {
+  padding: 25px;
+  border: 1px solid rgba(165, 205, 177, .16);
+  border-radius: 18px;
+  background: rgba(255,255,255,.035);
+}
+
+#start .map-section h2 {
+  color: #edf0dc;
+  text-align: center;
+  font-size: 21px;
+}
+
+#start .map-section > p {
+  color: #aebfb4;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#start .region-map {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin: 25px 0;
+}
+
+#start .region-map .region {
+  min-height: 105px;
+  padding: 16px 8px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 14px;
+  background: rgba(255,255,255,.055);
+  color: #edf1e9;
+  font-size: 27px;
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+#start .region-map .region span {
+  display: block;
+  margin-top: 9px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+#start .region-map .region:hover {
+  transform: translateY(-5px);
+  border-color: #a8c99e;
+  background: rgba(105, 153, 111, .16);
+}
+
+#start .region-map .region.selected {
+  border: 2px solid #d5d18e;
+  background: rgba(145, 156, 83, .18);
+  box-shadow: 0 0 22px rgba(194, 190, 104, .12);
+}
+
+#start #regionDescription {
+  min-height: 45px;
+  margin: 20px 0 0;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.045);
+  color: #d3ddcf;
+}
+
+/* OYUNA BAŞLA */
+
+#start .start-action {
+  margin-top: 38px;
+  text-align: center;
+}
+
+#start .start-action p {
+  color: #a9bcae;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+#start .start-action button {
+  min-width: 230px;
+  margin-top: 12px;
+  padding: 17px 30px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #b8c987, #648c68);
+  color: #10201a;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(100, 140, 104, .25);
+  transition: .25s ease;
+}
+
+#start .start-action button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.12);
+  box-shadow: 0 12px 30px rgba(100, 140, 104, .35);
+}
+
+/* MOBİL UYUMLULUK */
+
+@media(max-width:650px) {
+
+  .game {
+    padding: 12px 10px 35px;
+  }
+
+  .game header {
+    padding: 14px;
+  }
+
+  .game .logo {
+    font-size: 14px;
+  }
+
+  .game .year {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  #start {
+    padding: 25px 15px;
+  }
+
+  #start .global-status {
+    gap: 7px;
+  }
+
+  #start .status-card {
+    padding: 17px 5px;
+  }
+
+  #start .status-card strong {
+    font-size: 21px;
+  }
+
+  #start .mission-panel {
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  #start .region-map {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  #start .map-section {
+    padding: 15px 10px;
+  }
+}
+
+/* ==================================
+   CLIMATE GAMES - CINEMATIC START
+================================== */
+
+#start {
+  min-height: 85vh;
+  padding: 65px 5%;
+  background:
+    radial-gradient(ellipse at 78% 45%, rgba(22, 91, 92, 0.22), transparent 42%),
+    linear-gradient(115deg, #071315, #0b1d22 55%, #071116);
+  color: #f2f7f5;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+}
+
+#start::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%, #ffffff88 50%, transparent),
+    radial-gradient(2px 2px at 75% 15%, #ffffff66 50%, transparent),
+    radial-gradient(1px 1px at 45% 75%, #ffffff66 50%, transparent),
+    radial-gradient(1px 1px at 90% 80%, #ffffff88 50%, transparent);
+  pointer-events: none;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 5%;
+  background: #071315;
+  color: #eaf4f0;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.logo span {
+  color: #68d6a0;
+}
+
+.year {
+  color: #8da9a2;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.hero-layout {
+  max-width: 1250px;
+  min-height: 650px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  color: #72dca8;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+}
+
+.hero-content h1 {
+  font-size: clamp(65px, 8vw, 110px);
+  line-height: 0.88;
+  letter-spacing: -5px;
+  margin: 0;
+  font-weight: 900;
+}
+
+.hero-content h1 span {
+  color: #72dca8;
+}
+
+.hero-content h2 {
+  font-size: 18px;
+  letter-spacing: 8px;
+  color: #a9c3ba;
+  margin-top: 25px;
+}
+
+.hero-description {
+  max-width: 440px;
+  color: #a9bfba;
+  font-size: 15px;
+  line-height: 1.9;
+  margin: 28px 0;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 13px;
+  color: #77a99a;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-bottom: 35px;
+}
+
+.hero-start {
+  background: #70dca5;
+  color: #071b16;
+  border: none;
+  padding: 17px 30px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.hero-start:hover {
+  background: #a1f0c4;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 35px #55d99b44;
+}
+
+.hero-start span {
+  margin-left: 18px;
+}
+
+/* DÜNYA GÖRSELİ */
+
+.hero-planet {
+  min-height: 520px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.earth-glow {
+  width: min(40vw, 490px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  background: radial-gradient(circle, #276d6d55, transparent 68%);
+  box-shadow: 0 0 100px #3cbf9a18;
+  animation: planetFloat 7s ease-in-out infinite;
+}
+
+.earth-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    inset -35px -15px 65px #020a0c,
+    0 0 35px #55cfa955;
+}
+
+.planet-orbit {
+  position: absolute;
+  width: 115%;
+  height: 45%;
+  border: 1px solid #72dca833;
+  border-radius: 50%;
+  transform: rotate(-25deg);
+}
+
+.orbit-two {
+  width: 125%;
+  height: 60%;
+  transform: rotate(35deg);
+  border-color: #65a9c333;
+}
+
+.planet-caption {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #9abbb0;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #72dca8;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 10px #72dca8;
+}
+
+@keyframes planetFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-13px);
+  }
+}
+
+/* BÖLGE SEÇİM EKRANI */
+
+#regionSelection {
+  position: relative;
+  z-index: 3;
+  max-width: 1050px;
+  margin: 20px auto;
+  padding: 45px 20px;
+  text-align: center;
+  color: #eef8f2;
+  background: #0a1b1d;
+  border-radius: 16px;
+}
+
+#regionSelection h2 {
+  font-size: clamp(26px, 4vw, 42px);
+  letter-spacing: 2px;
+  margin: 15px 0;
+}
+
+#regionSelection > p {
+  color: #9bb5aa;
+}
+
+#regionSelection .region-map {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 35px 0;
+}
+
+#regionSelection .region {
+  min-height: 105px;
+  border: 1px solid #34524a;
+  border-radius: 8px;
+  background: #112825;
+  color: #eaf5ef;
+  cursor: pointer;
+  transition: 0.25s ease;
+  font-size: 25px;
+}
+
+#regionSelection .region span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+#regionSelection .region:hover,
+#regionSelection .region.selected {
+  border-color: #70dca5;
+  background: #1b4035;
+  transform: translateY(-3px);
+}
+
+#regionSelection > .hero-start {
+  margin-top: 25px;
+}
+
+/* MOBİL */
+
+@media (max-width: 750px) {
+
+  #start {
+    padding: 35px 20px;
+  }
+
+  .hero-layout {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .hero-content h1 {
+    font-size: 65px;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-meta {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-planet {
+    min-height: 330px;
+  }
+
+  .earth-glow {
+    width: min(75vw, 330px);
+  }
+
+  #regionSelection .region-map {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* =================================
+   CLIMATE GAMES - CSS EARTH
+================================= */
+
+.earth-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+
+  background-color: #092c42 !important;
+
+  background-image:
+    radial-gradient(ellipse at 28% 30%, #70a85b 0%, transparent 13%),
+    radial-gradient(ellipse at 38% 47%, #4c914f 0%, transparent 17%),
+    radial-gradient(ellipse at 68% 35%, #7ba95c 0%, transparent 14%),
+    radial-gradient(ellipse at 62% 66%, #5a984e 0%, transparent 18%),
+    radial-gradient(ellipse at 25% 72%, #427e49 0%, transparent 10%),
+    radial-gradient(circle at 35% 35%, #2585a0, #075078 58%, #031b36 100%) !important;
+
+  background-size: 100% 100%;
+  box-shadow:
+    inset -35px -15px 65px #010b20,
+    inset 12px 5px 35px #7ceaff66,
+    0 0 25px #37b9d477,
+    0 0 80px #168eaa55;
+
+  animation: earthRotate 35s linear infinite;
+}
+
+/* Atmosfer ve bulutlar */
+
+.earth-image::before {
+  content: "";
+  position: absolute;
+  inset: -5%;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(ellipse at 30% 22%, #ffffff66 0%, transparent 10%),
+    radial-gradient(ellipse at 62% 28%, #ffffff55 0%, transparent 12%),
+    radial-gradient(ellipse at 48% 55%, #ffffff44 0%, transparent 8%),
+    radial-gradient(ellipse at 75% 65%, #ffffff55 0%, transparent 10%),
+    radial-gradient(ellipse at 25% 75%, #ffffff33 0%, transparent 9%);
+
+  filter: blur(7px);
+  opacity: 0.65;
+}
+
+/* Gezegenin ışıklı atmosferi */
+
+.earth-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background:
+    linear-gradient(110deg, transparent 35%, #8ceaff22 65%, #b2f4ff55 100%);
+
+  box-shadow:
+    inset 5px 0 20px #8ceaff55,
+    inset -30px -5px 45px #000b24;
+
+  pointer-events: none;
+}
+
+@keyframes earthRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =====================================
+   CLIMATE GAMES - REGION SELECT SCREEN
+===================================== */
+
+#regionSelection {
+  background:
+    radial-gradient(ellipse at 50% 0%, #17453c55, transparent 65%),
+    #091719 !important;
+  border: 1px solid #29463d;
+  padding: 55px 30px !important;
+  border-radius: 18px;
+  box-shadow: 0 20px 70px #0008;
+}
+
+#regionSelection .hero-eyebrow {
+  color: #70dca5;
+  letter-spacing: 4px;
+}
+
+#regionSelection h2 {
+  color: #f0f8f3;
+  font-size: clamp(25px, 4vw, 38px);
+  letter-spacing: 2px;
+}
+
+#regionSelection > p {
+  color: #9db7ad;
+  font-size: 14px;
+}
+
+/* BÖLGE KARTLARI */
+
+#regionSelection .region-map {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 40px 0 25px;
+}
+
+#regionSelection .region {
+  position: relative;
+  min-height: 145px;
+  overflow: hidden;
+  border: 1px solid #34554b;
+  border-radius: 12px;
+  background: #112a27;
+  color: #effbf4;
+  cursor: pointer;
+  font-size: 35px;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+
+#regionSelection .region::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .2;
+  transition: opacity .25s;
+  background: linear-gradient(145deg, #4bd99a55, transparent 65%);
+}
+
+#regionSelection .region:hover {
+  transform: translateY(-5px);
+  border-color: #70dca5;
+  box-shadow: 0 10px 30px #49d99a22;
+}
+
+#regionSelection .region:hover::before,
+#regionSelection .region.selected::before {
+  opacity: .65;
+}
+
+#regionSelection .region.selected {
+  border: 2px solid #70dca5;
+  background: #193b31;
+  box-shadow:
+    0 0 0 2px #70dca522,
+    0 0 28px #70dca533;
+}
+
+#regionSelection .region span {
+  position: relative;
+  display: block;
+  margin-top: 13px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+/* BÖLGEYE ÖZEL RENKLER */
+
+#regionSelection .region.desert {
+  background: linear-gradient(145deg, #513b20, #17251e);
+}
+
+#regionSelection .region.coast {
+  background: linear-gradient(145deg, #17475a, #102b30);
+}
+
+#regionSelection .region.forest {
+  background: linear-gradient(145deg, #174a32, #10251d);
+}
+
+#regionSelection .region.polar {
+  background: linear-gradient(145deg, #31536b, #152a3b);
+}
+
+#regionSelection .region.metro {
+  background: linear-gradient(145deg, #45434d, #1a2028);
+}
+
+#regionSelection .region.agriculture {
+  background: linear-gradient(145deg, #4a4a25, #20291c);
+}
+
+/* BÖLGE AÇIKLAMASI */
+
+#regionDescription {
+  max-width: 650px;
+  margin: 25px auto !important;
+  padding: 17px 20px;
+  border-left: 3px solid #70dca5;
+  background: #102521;
+  border-radius: 5px;
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* GÖREV BAŞLAT */
+
+#regionSelection > .hero-start {
+  min-width: 230px;
+  margin-top: 25px;
+  box-shadow: 0 0 25px #70dca522;
+}
+
+/* TELEFON */
+
+@media (max-width: 650px) {
+  #regionSelection {
+    padding: 35px 15px !important;
+  }
+
+  #regionSelection .region-map {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  #regionSelection .region {
+    min-height: 115px;
+  }
+}
+
+/* =========================================
+   CLIMATE GAMES - GAME SCREEN DESIGN
+========================================= */
+
+#play {
+  max-width: 1100px;
+  margin: 35px auto;
+  padding: 35px;
+  color: #eaf5ef;
+  background:
+    radial-gradient(ellipse at 50% 0%, #17453c44, transparent 55%),
+    #091719;
+  border: 1px solid #29463d;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px #0007;
+}
+
+/* BÖLGE VE TUR BİLGİSİ */
+
+#play .district-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  background: #132824;
+  border: 1px solid #315044;
+  border-radius: 8px;
+  color: #8ce0b2;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+#play > h2,
+#play > h3 {
+  color: #eaf5ef;
+  letter-spacing: 2px;
+}
+
+/* KAYNAK GÖSTERGELERİ */
+
+#play .resources {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin: 20px 0 35px;
+}
+
+#play .resources > div {
+  background: linear-gradient(145deg, #18332d, #10211f);
+  border: 1px solid #34564a;
+  border-radius: 10px;
+  padding: 20px 12px;
+  color: #eaf5ef;
+  text-align: center;
+  transition: .25s ease;
+}
+
+#play .resources > div:hover {
+  border-color: #70dca5;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px #70dca522;
+}
+
+/* İKLİM KRİZİ ALANI */
+
+#play .event {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  margin: 30px 0;
+  background:
+    linear-gradient(120deg, #142e2b, #10201f);
+  border: 1px solid #3b6554;
+  border-radius: 12px;
+}
+
+#play .event .tag,
+#play .event p.tag {
+  color: #70dca5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+#play #eventTitle {
+  color: #f1f8f3;
+  font-size: clamp(23px, 4vw, 34px);
+  margin: 15px 0;
+}
+
+#play #eventDescription {
+  color: #afc5bb;
+  line-height: 1.9;
+  max-width: 800px;
+}
+
+/* KARAR SEÇENEKLERİ */
+
+#play #choices {
+  display: grid;
+  gap: 13px;
+  margin: 25px 0;
+}
+
+#play #choices button {
+  width: 100%;
+  padding: 19px 22px;
+  text-align: left;
+  color: #eaf5ef;
+  background: #142a26;
+  border: 1px solid #345348;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: .25s ease;
+  line-height: 1.6;
+}
+
+#play #choices button:hover {
+  background: #1c3b31;
+  border-color: #70dca5;
+  transform: translateX(4px);
+}
+
+#play #choices button.selected,
+#play #choices button:focus {
+  background: #204638;
+  border: 2px solid #70dca5;
+  box-shadow: 0 0 20px #70dca533;
+  outline: none;
+}
+
+/* GERİ BİLDİRİM */
+
+#play #feedback {
+  color: #b8d8c8;
+  line-height: 1.8;
+}
+
+/* MOBİL UYUMLULUK */
+
+@media (max-width: 700px) {
+  #play {
+    padding: 20px 14px;
+    margin: 15px auto;
+  }
+
+  #play .resources {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #play .event {
+    padding: 20px;
+  }
+
+  #play .district-info {
+    gap: 10px;
+    font-size: 11px;
+  }
+}
+#dogaAvatarButton {
+  padding: 3px;
+  overflow: hidden;
+}
+
+#dogaAvatarButton svg {
+  display: block;
+  transition: transform .3s ease;
+}
+
+#dogaAvatarButton:hover svg {
+  transform: scale(1.12) rotate(-5deg);
+}
+
+/* =========================================
+   DOĞA - DUYGULARA ÖZEL ANİMASYONLAR
+========================================= */
+
+#dogaAvatarButton svg {
+  transform-origin: center bottom;
+}
+
+/* MUTLU: ZIPLAMA */
+
+#dogaWidget.doga-happy #dogaAvatarButton svg {
+  animation: dogaHappy 0.8s ease-in-out infinite;
+}
+
+@keyframes dogaHappy {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  30% {
+    transform: translateY(-9px) rotate(-5deg);
+  }
+  60% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+/* ENDİŞELİ: SALLANMA */
+
+#dogaWidget.doga-worried #dogaAvatarButton svg {
+  animation: dogaWorried 0.7s ease-in-out infinite;
+}
+
+@keyframes dogaWorried {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* DÜŞÜNEN: NEFES ALMA */
+
+#dogaWidget.doga-thinking #dogaAvatarButton svg {
+  animation: dogaThinking 2.2s ease-in-out infinite;
+}
+
+@keyframes dogaThinking {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* ŞAŞKIN: BÜYÜME */
+
+#dogaWidget.doga-surprised #dogaAvatarButton svg {
+  animation: dogaSurprised 0.6s ease-out;
+}
+
+@keyframes dogaSurprised {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.22);
+  }
+  70% {
+    transform: scale(.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* HAREKETLERİ YUMUŞAT */
+
+@media (prefers-reduced-motion: reduce) {
+  #dogaAvatarButton svg {
+    animation: none !important;
+  }
+}
+
+/* =========================================
+   CLIMATE GAMES - BÖLGEYE ÖZEL GÖRSEL ATMOSFER
+========================================= */
+
+/* Ortak kart görünümü */
+#start .region-map .region {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  transition: background 0.35s ease, transform 0.3s ease;
+}
+
+/* ÇÖL */
+#start .region-map .region.desert {
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(255,220,145,.38), transparent 35%),
+    linear-gradient(160deg, #a96d39 0%, #71472e 48%, #302b2a 100%);
+}
+
+/* KIYI */
+#start .region-map .region.coast {
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(160,235,245,.35), transparent 35%),
+    linear-gradient(160deg, #278ca2 0%, #15546d 52%, #172e3c 100%);
+}
+
+/* ORMAN */
+#start .region-map .region.forest {
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(170,220,125,.3), transparent 35%),
+    linear-gradient(160deg, #397b4a 0%, #205337 52%, #142f2c 100%);
+}
+
+/* KUTUP */
+#start .region-map .region.polar {
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(255,255,255,.5), transparent 35%),
+    linear-gradient(160deg, #83b8c9 0%, #477f9b 52%, #203f59 100%);
+}
+
+/* METROPOL */
+#start .region-map .region.metro {
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(255,210,125,.3), transparent 35%),
+    linear-gradient(160deg, #59677c 0%, #343d54 52%, #171e32 100%);
+}
+
+/* TARIM */
+#start .region-map .region.agriculture {
+  background-image:
+    radial-gradient(ellipse at 75% 25%, rgba(235,220,130,.35), transparent 35%),
+    linear-gradient(160deg, #929044 0%, #586334 52%, #263c30 100%);
+}
+
+/* ÜZERİNE GELİNCE */
+#start .region-map .region:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.13);
+}
+
+/* SEÇİLİ KART */
+#start .region-map .region.selected {
+  border: 2px solid #72e6a2;
+  box-shadow: 0 0 18px rgba(80,220,140,.28);
+}
+
+/* =========================================
+   2100 - ETKİLEYİCİ FİNAL EKRANI
+========================================= */
+
+#finalYearBanner {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 28px 20px;
+  margin: 25px 0;
+  text-align: center;
+  border: 1px solid rgba(110, 230, 170, 0.35);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(58, 180, 130, 0.22), transparent 65%),
+    linear-gradient(145deg, #102e2b, #101d2b);
+  box-shadow: 0 0 35px rgba(60, 190, 130, 0.12);
+  color: #b9f5d1;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+/* Dünya atmosferi */
+#finalYearBanner::before {
+  content: "";
+  display: block;
+  width: 105px;
+  height: 105px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #b9f5d1 0%, #4cae91 18%, #176c68 48%, #102d45 75%);
+  box-shadow:
+    0 0 20px rgba(91, 230, 170, 0.45),
+    0 0 55px rgba(52, 180, 150, 0.2),
+    inset -12px -8px 20px rgba(0, 0, 0, 0.35);
+  animation: finalEarthFloat 4s ease-in-out infinite;
+}
+
+/* Dünya üzerindeki kıtaları andıran şekiller */
+#finalYearBanner::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 105px;
+  height: 105px;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 35% 35%, rgba(170, 230, 150, .8) 0 12%, transparent 13%),
+    radial-gradient(ellipse at 65% 60%, rgba(120, 205, 130, .8) 0 15%, transparent 16%);
+  pointer-events: none;
+}
+
+@keyframes finalEarthFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* Final puanını vurgula */
+#finalScore {
+  color: #8de9b2;
+  text-shadow: 0 0 18px rgba(90, 230, 150, 0.25);
+}
+
+/* =========================================
+   2100 DÜNYA DURUMU
+========================================= */
+
+#finalYearBanner {
+  text-align: center;
+  padding: 30px 20px;
+  margin: 20px 0;
+  border-radius: 22px;
+  transition: background 0.6s ease;
+  color: white;
+  font-weight: bold;
+  font-size: 21px;
+}
+
+#finalYearBanner.earth-healthy {
+  background: linear-gradient(145deg, #164d37, #102c29);
+  box-shadow: 0 0 30px rgba(70, 220, 130, 0.25);
+}
+
+#finalYearBanner.earth-balanced {
+  background: linear-gradient(145deg, #75652c, #34321f);
+  box-shadow: 0 0 30px rgba(230, 190, 70, 0.2);
+}
+
+#finalYearBanner.earth-critical {
+  background: linear-gradient(145deg, #853d2c, #351d29);
+  box-shadow: 0 0 30px rgba(240, 90, 60, 0.2);
+}
+
+#finalYearBanner .final-earth {
+  width: 115px;
+  height: 115px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    #b8f4c4,
+    #348b70 45%,
+    #143b50 80%
+  );
+  box-shadow: 0 0 30px rgba(120, 220, 180, 0.4);
+  animation: finalEarthFloat 4s ease-in-out infinite;
+}
+
+#finalYearBanner.earth-balanced .final-earth {
+  filter: sepia(0.5) saturate(0.8);
+}
+
+#finalYearBanner.earth-critical .final-earth {
+  filter: sepia(0.8) saturate(1.8) hue-rotate(320deg);
+}
+
+#finalYearBanner p {
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 12px;
+}
+
+@keyframes finalEarthFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* =========================================
+   2100 - KAYNAK GÖSTERGELERİ
+========================================= */
+
+.final-resource-visual {
+  margin: 25px 0;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(15, 38, 42, 0.85);
+  border: 1px solid rgba(120, 210, 170, 0.2);
+}
+
+.final-resource-visual h3 {
+  text-align: center;
+  color: #b9f5d1;
+  margin-bottom: 22px;
+}
+
+.final-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.final-resource-card {
+  padding: 15px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.final-resource-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.final-resource-heading strong {
+  color: #b9f5d1;
+}
+
+.final-resource-track {
+  height: 9px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.final-resource-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.8s ease;
+}
+
+.final-resource-fill.good {
+  background: #56d68b;
+}
+
+.final-resource-fill.warning {
+  background: #e9bd55;
+}
+
+.final-resource-fill.critical {
+  background: #ed735d;
+}
+
+.final-resource-card small {
+  display: block;
+  margin-top: 8px;
+  color: #c5d4d0;
+}
+
+@media (max-width: 550px) {
+  .final-resource-grid {
+    grid-template-columns: 1fr;
+  }
+}

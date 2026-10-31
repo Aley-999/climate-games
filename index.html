@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLIMATE GAMES: SON NESİL</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+
+<div class="game">
+
+  <header class="main-header">
+    <div class="logo">CLIMATE GAMES<span>.</span></div>
+    <div class="year">2085 — 2100</div>
+  </header>
+
+  <!-- AÇILIŞ EKRANI -->
+  <section id="start">
+
+    <div class="hero-layout">
+
+      <div class="hero-content">
+
+        <p class="hero-eyebrow">A GLOBAL CLIMATE STRATEGY GAME · 2085</p>
+
+        <h1>
+          CLIMATE<br>
+          <span>GAMES</span>
+        </h1>
+
+        <h2>SON NESİL</h2>
+
+        <p class="hero-description">
+          Dünya değişiyor. İklim dengesi bozuluyor.
+          İnsanlığın geleceği artık senin kararlarına bağlı.
+          Kaynakları yönet, krizlere müdahale et ve
+          2100 yılının dünyasını şekillendir.
+        </p>
+
+        <div class="hero-meta">
+          <span>6 FARKLI BÖLGE</span>
+          <span>·</span>
+          <span>15 YILLIK MÜCADELE</span>
+        </div>
+
+        <button class="hero-start" onclick="showRegionSelection()">
+          OYUNA BAŞLA <span>→</span>
+        </button>
+
+      </div>
+
+      <div class="hero-planet">
+        <div class="planet-orbit orbit-one"></div>
+        <div class="planet-orbit orbit-two"></div>
+        <div class="earth-glow">
+          <div class="earth-image"></div>
+        </div>
+        <div class="planet-caption">
+          <span class="status-dot"></span>
+          GLOBAL CLIMATE STATUS: CRITICAL
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BÖLGE SEÇİMİ -->
+    <section id="regionSelection" class="hidden">
+
+      <p class="hero-eyebrow">YOUR MISSION STARTS HERE</p>
+      <h2>YÖNETECEĞİN BÖLGEYİ SEÇ</h2>
+      <p>Her bölge farklı bir iklim kriziyle karşı karşıya.</p>
+
+      <div class="region-map">
+
+        <button class="region desert selected" onclick="selectRegion('desert')">
+          🏜️ <span>ÇÖL BÖLGESİ</span>
+        </button>
+
+        <button class="region coast" onclick="selectRegion('coast')">
+          🌊 <span>KIYI BÖLGESİ</span>
+        </button>
+
+        <button class="region forest" onclick="selectRegion('forest')">
+          🌲 <span>ORMAN BÖLGESİ</span>
+        </button>
+
+        <button class="region polar" onclick="selectRegion('polar')">
+          ❄️ <span>KUTUP BÖLGESİ</span>
+        </button>
+
+        <button class="region metro" onclick="selectRegion('metro')">
+          🏙️ <span>METROPOL BÖLGESİ</span>
+        </button>
+
+        <button class="region agriculture" onclick="selectRegion('agriculture')">
+          🌾 <span>TARIM BÖLGESİ</span>
+        </button>
+
+      </div>
+
+      <p id="regionDescription">
+        Su kaynakları çok sınırlı. Kuraklık en büyük tehdidin.
+      </p>
+
+      <select id="district" style="display:none">
+        <option value="Çöl Bölgesi">Çöl Bölgesi</option>
+        <option value="Kıyı Bölgesi">Kıyı Bölgesi</option>
+        <option value="Orman Bölgesi">Orman Bölgesi</option>
+        <option value="Kutup Bölgesi">Kutup Bölgesi</option>
+        <option value="Metropol Bölgesi">Metropol Bölgesi</option>
+        <option value="Tarım Bölgesi">Tarım Bölgesi</option>
+      </select>
+
+      <button class="hero-start" onclick="startGame()">
+        GÖREVİ BAŞLAT →
+      </button>
+
+    </section>
+
+  </section>
+
+  <!-- OYUN EKRANI -->
+  <section id="play" class="hidden">
+
+    <div class="district-info">
+      <span id="districtName"></span>
+      <span id="round">TUR 1 / 6</span>
+    </div>
+
+    <h2>KAYNAK DURUMU</h2>
+    <div class="resources" id="resources"></div>
+
+    <div class="event">
+      <div id="eventVisual" class="event-visual"></div>
+      <p class="tag">İKLİM KRİZİ</p>
+      <h2 id="eventTitle"></h2>
+      <p id="eventDescription"></p>
+    </div>
+
+    <h3>ÇÖZÜMÜN NE OLACAK?</h3>
+    <div id="choices"></div>
+    <div id="feedback"></div>
+
+  </section>
+
+  <!-- SONUÇ EKRANI -->
+  <section id="result" class="hidden">
+
+    <p class="tag">GELECEK RAPORU</p>
+    <h1 id="resultTitle"></h1>
+    <h2 id="finalScore"></h2>
+    <p id="resultText"></p>
+
+    <button onclick="location.reload()">YENİDEN OYNA</button>
+
+  </section>
+
+</div>
+
+<!-- ETKİLEŞİMLİ DÜNYA HARİTASI -->
+<section id="climateWorld">
+
+  <div class="world-heading">
+    <span>CLIMATE GAMES · 2085–2100</span>
+    <h2>🌍 GELECEĞİN DÜNYASINI YÖNET</h2>
+    <p>Bir bölge seç ve iklim durumunu incele.</p>
+  </div>
+
+  <div class="world-map">
+
+    <button class="region desert" data-region="desert">
+      <span>🏜️</span><strong>ÇÖL</strong>
+    </button>
+
+    <button class="region coast" data-region="coast">
+      <span>🌊</span><strong>KIYI</strong>
+    </button>
+
+    <button class="region forest" data-region="forest">
+      <span>🌲</span><strong>ORMAN</strong>
+    </button>
+
+    <button class="region polar" data-region="polar">
+      <span>❄️</span><strong>KUTUP</strong>
+    </button>
+
+    <button class="region metro" data-region="metro">
+      <span>🏙️</span><strong>METROPOL</strong>
+    </button>
+
+    <button class="region agriculture" data-region="agriculture">
+      <span>🌾</span><strong>TARIM</strong>
+    </button>
+
+  </div>
+
+  <div id="regionInformation">
+    <span>🌐</span>
+    <h3>DÜNYA HARİTASI</h3>
+    <p>İncelemek istediğin bölgeye tıkla.</p>
+  </div>
+
+</section>
+
+</body>
+</html>
